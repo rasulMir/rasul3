@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+
+	<style>
+		.wrapper {
+			min-height: 100vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="top">
+			<input type="text" name="city" id="inpCity" placeholder="ваш город">
+			<button type="button">OK</button>
+		</div>
+		<a href="./otherPage.html">./otherPage.html</a>
+	</div>
+	<script src="https://unpkg.com/cookielib@1.1.3/src/cookie.js"></script>
+
+	<script>
+		// 3) Дан инпут. Ведите в него город, например, Минск. Сохраните его в куки. Зайдя на другую страницу сайта вы должны увидеть фразу 'ваш город - Минск'.
+		let userCity = document.querySelector('#inpCity');
+		let btn = document.querySelector('button');
+		let bttm = document.querySelector('.bttm');
+
+
+		btn.addEventListener('click', e => {
+			if (userCity.value) {
+				setCookie('city', userCity.value, { path : "./otherPage.html"});
+			} else {
+				alert('Заполните все поля')
+			}
+		});
+
+	</script>
+</body>
+</html>

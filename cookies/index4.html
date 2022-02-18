@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+
+	<style>
+		.wrapper {
+			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+		}
+	</style>
+</head>
+<body>
+
+	<div class="wrapper">
+		<input type="date" name="birth" id="birthday">
+		<span></span>
+	</div>
+	<script src="https://unpkg.com/cookielib@1.1.3/src/cookie.js"></script>
+	<script>
+		//4) При заходе на страницу спросите с помощью инпута день рождения пользователя. Когда он зайдет с следующий раз - напишите сколько месяцев, дней, часов, минут и секунд осталось до его дня рождения. И пусть по этим числам запуститься обратный отсчет (то есть они будут тикать). 
+
+		let birth = document.querySelector('#birthday');
+		let span = document.querySelector('span');
+		if (getCookie('birth')) {
+			span.textContent = '';
+			let now = Date.now();
+			let birth = new Date(getCookie('birth'));
+			if (now <= birth) {
+				let timest = birth - now;
+				let s = timest / 1000; 
+				let h = s / 3600;
+				let d = h / 24;
+				let m = d / 30;
+				let y = m / 12;
+
+				span.textContent = `${s.toFixed(2)} seconds ${h.toFixed(2)} hours ${d.toFixed(2)} days ${m.toFixed(2)} month ${y.toFixed(2)} years`;
+			} else {
+				span.textContent = 'tuilgan kuningiz otip ketti';
+			}
+		}
+		birth.addEventListener('change', e => {
+			setCookie('birth', birth.value, {expires: new Date(+Date.now() + 864e5)});
+		});
+	</script>
+</body>
+</html>
