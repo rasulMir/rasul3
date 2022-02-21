@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+
+	<style>
+		.wrapper {
+			min-height: 100vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.span {
+			font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+			font-size: 26px;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+
+	<div class="wrapper">
+		<span class="span">ijlkj</span>
+	</div>
+	
+	<script src="https://unpkg.com/cookielib@1.1.3/src/cookie.js"></script>
+	<script>
+		// 7) При заходе на страницу появляется счетчик обратного отсчета. Когда он доходит до нуля, на странице пишется - 'отсчет закончен'. При обновлении страницы счетчик не должен начинать идти заново.
+
+		let span = document.querySelector('.span');
+		let counter = (start, end) => {
+			return () => {
+				if (start >= end) {
+					return start--;
+				}
+			}
+		}
+		(function () {
+			if (getCookie('bool')) {
+				span.textContent = 'отсчет закончен';
+			} else {
+				let num = counter(9, 0);
+				let inter = setInterval(() => {
+					span.textContent = num();
+				}, 1000);
+				setTimeout(() => {
+					setCookie('bool', 'end');
+					clearInterval(inter);
+				}, 1e4);
+			}
+		})();
+	</script>
+</body>
+</html>

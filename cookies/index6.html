@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		.wrapper {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			min-height: 100vh;
+		}
+
+		input {
+			display: block;
+			margin: 5px 0;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="form">
+			<label for="name">
+				car
+				<input type="checkbox" name="car" id="car">
+			</label>
+			<label for="age">
+				house
+				<input type="checkbox" name="house" id="house">
+			</label>
+			<label for="city">
+				laptop
+				<input type="checkbox" name="laptop" id="laptop">
+			</label>
+		</div>
+	</div>
+	<script src="https://unpkg.com/cookielib@1.1.3/src/cookie.js"></script>
+	<script>
+		// 6) Даны чекбоксы. Пользователь произвольно отмечает их и закрывает страницу. Сделайте так, чтобы при следующем заходе на страницу чекбоксы стали отмеченными так, как это сделал пользователь ранее. 
+
+		let inps = document.querySelectorAll('input');
+		for (let inp of inps) {
+			let cookie = getCookie(inp.id);
+			inp.checked = (cookie) ? true : false;
+		}
+		document.addEventListener('click', e => {
+			for (let inp of inps) {
+				let d = new Date(Date.now() + 864e6);
+				if (!inp.checked) {
+					setCookie(inp.id, '', {expires : d});
+				} else {
+					setCookie(inp.id, 'true', {expires : d});
+				}
+			}
+		});
+	</script>
+</body>
+</html>
