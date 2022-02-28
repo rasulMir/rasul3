@@ -1,0 +1,146 @@
+.wrapper {
+	position: relative;
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: rgb(63, 63, 63);
+	font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+
+	&_white {
+		background-color: #fff;
+	}
+}
+.pop-up {
+	padding: 10px;
+	display: flex;// flex
+	flex-direction: column;
+	justify-content: center;
+	align-content: center;
+	background-color: #fff;
+	border-radius: 5px;
+
+	// .pop-up__lbl
+	&__lbl {
+		text-align: center;
+		font-size: 18px;
+		text-transform: uppercase;
+		margin: 0 0 10px 0;
+	}
+
+	// .pop-up__inpName
+	&__inpName {
+		margin: 5px 0 0 0;
+		display: block;
+	}
+
+	// .pop-up__btn
+	&__btn {
+		background-color: rgb(27, 223, 27);
+		padding: .5em;
+		text-transform: uppercase;
+		border: none;
+		cursor: pointer;
+	}
+}
+
+.chat {
+	flex: 0 1 500px;
+	height: 500px;
+	padding: 10px;
+	background-color: #1E1D1E;
+	color: #fff;
+	display: none;
+	flex-direction: column;
+	align-items: stretch;
+	&_visible {
+		display: flex;
+	}
+	// .chat__title
+	&__title {
+		margin: 0 0 10px 0;
+		text-align: center;
+		letter-spacing: 3px;
+	}
+
+	// .chat__top
+	&__top {
+		flex: 0 0 60%;
+		overflow: auto;
+
+		&::-webkit-scrollbar  {
+			width: 10px;
+		} 
+		&::-webkit-scrollbar-track {
+			border-radius: 5px;
+		}
+		&::-webkit-scrollbar-thumb {
+			background-color: #565456;
+			border-radius: 5px;
+		}
+	}
+
+	// .chat__message-item
+	&__message-item {
+		max-width: 100%;
+		margin: 0 0 8px 0;
+		padding: 5px;
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+	}
+
+	// .chat__time
+	&__time {
+		flex: 0 0 5%;
+		padding: 0 5px 0 0;
+		color: #5A5E6A;
+		font-weight: 300;
+	}
+
+	// .chat__name
+	&__name {
+		flex: 0 0 10%;
+		padding: 0 5px 0 0;
+		color: #9D6090;
+	}
+
+	// .chat__text
+	&__text {
+		flex: 1 0;
+		text-align: left;
+		color: #5A5E6A;
+	}
+
+	// .chat__bttm
+	&__bttm {
+		padding: 10px 0;
+		flex: 0 1 20%;
+		display: flex;
+		flex-direction: column;
+	}
+
+	// .chat__inp-message
+	&__inp-message {
+		margin: 0 0 10px 0;
+		padding: 2px;
+		min-width: 100%;
+		min-height: 50px;
+		letter-spacing: 2px;
+		font-size: 14px;
+		background-color: #0A090A;
+		color: #fff;
+		border: none;
+		box-shadow: 0 0 20px 2px rgba(255,255,255, .2);
+	}
+
+	// .chat__btn
+	&__btn {
+		align-self:flex-end;
+		padding: .5em 1em;
+		font-size: 18px;
+		border: none;
+		cursor: pointer;
+		background-color: #6131A6;
+	}
+}

@@ -14,7 +14,7 @@
 			justify-content: center;
 			align-items: center;
 		}
-		.wrapper > div {
+		.wrapper > * {
 			margin: 0 0 10px 0;
 		}
 	</style>
@@ -26,12 +26,81 @@
 			<button type="button" id="prev"><i class="fa-solid fa-arrow-up"></i></button>
 			<button type="button" id="next"><i class="fa-solid fa-arrow-down"></i></button>
 		</div>
+		<div class="info-txt"></div>
+		<label for="text">Text</label>
 		<input type="text" name="text" id="inpText">
+		<label for="date">Date</label>
+		<input type="date" name="date" id="inpDate">
+		<button id="submitBtn" type="button">Submit</button>
 	</div>
 	<script src="https://unpkg.com/cookielib@1.1.3/src/cookie.js"></script>
 	<script>
 		// 9) Дан инпут. В него можно ввести данные, затем поредактировать их, затем еще поредактировать. Пусть инпут хранит историю своих изменений (даже после перезагрузки страницы). Сверху над инпутом должны появится стрелочки, с помощью которых можно перемещаться по истории.
-		
+		let textInp = document.querySelector('#inpText');
+		let dateInp = document.querySelector('#inpDate');
+		let infoTxt = document.querySelector('.info-txt');
+		function addDataToCookies(curr) {
+			if (curr.closest('#submitBtn')) {
+				let history = getCookie('history');
+				if (!textInp.value && !dateInp.value) {
+					infoTxt.textContent = 'Заполните все поля!!!';
+					return;
+				} else if (!history) {
+					setCookie('history', `${textInp.value} ${dateInp.value}`, {expire : new Date('2025-10-10 03:00:00')});
+				}	else {
+					let lastCookies = history;
+					setCookie('history', `${lastCookies},${textInp.value} ${dateInp.value}`, {expire : new Date('2025-10-10 03:00:00')});
+				}
+			} else return;
+		}
+		function displayToInputs(itemOfCookies) {
+			let [txt, date] = itemOfCookies.split(' ');
+			textInp.value = txt;
+			dateInp.value = date;
+		}
+		function prevBtn(curr) {
+			if(curr.closest('#prev')) {
+				let history = getCookie('history');
+				if (history) {//ind >= historyArr.length
+					let historyArr = history.split(',');
+					let ind = historyArr.findIndex(e => e === `${textInp.value} ${dateInp.value}`); 
+					ind--;
+					displayToInputs(historyArr[ind]);
+				} else {
+					infoTxt.textContent = 'Дальше ничего нет';
+					return;
+				}
+			} else return;
+		}
+		function nextBtn(curr) {
+			if(curr.closest('#next')) {
+				let history = getCookie('history');
+				if (!history) {//ind >= historyArr.length
+					infoTxt.textContent = 'Дальше ничего нет';
+					return;
+				} else {
+					let historyArr = history.split(',');
+					let ind = historyArr.findIndex(e => e === `${textInp.value} ${dateInp.value}`); 
+					ind++;
+					displayToInputs(historyArr[ind]);
+				}
+			} else return;
+		}
+		(function displayLastHistoryItem() {
+			let history = getCookie('history');
+			if (history) {
+				let historyArr = history.split(',');
+				let lastData = historyArr[historyArr.length - 1];
+				displayToInputs(lastData);
+			} else return;
+		})();
+		document.addEventListener('click', e => {
+			let curr = e.target;
+			infoTxt.textContent = '';
+			addDataToCookies(curr);
+			prevBtn(curr);
+			nextBtn(curr);
+		});
 	</script>
 </body>
 </html>

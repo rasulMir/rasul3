@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="./css/style.css">
+	<link rel="stylesheet" href="./norm.css">
+	<title>WebSocket</title>
+</head>
+<body>
+
+	<div class="wrapper">
+		<div class="pop-up">
+			<label class="pop-up__lbl" for="userName">
+				username
+				<input class="pop-up__inpName" type="text" name="username" id="userName">
+			</label>
+			<button class="pop-up__btn" type="button" id="nameBtn">send</button>
+		</div>
+		<div class="chat">
+			<h1 class="chat__title">
+				Chat
+			</h1>
+			<div class="chat__top">
+				
+			</div>
+			<form class="chat__bttm">
+				<textarea class="chat__inp-message" name="message" id="message" cols="30" rows="5"></textarea>
+				<button class="chat__btn" type="button">Send</button>
+			</form>
+		</div>
+	</div>
+
+	<script src="./script.js"></script>
+</body>
+</html>

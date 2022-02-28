@@ -1,79 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <!-- Latest compiled and minified CSS -->
+        <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+            integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+            crossorigin="anonymous"
+        />
+    </head>
+    <body>
+        <style>
+            .server-message {
+                display: block;
+            }
+        </style>
 
-    <style>
-        .server-message{
-            display: block;
-        }
-    </style>
-
-    <div class="panel panel-default">
-        <div class="panel panel-heading"> Websocket connection...</div>
-        <div class="panel panel-body">
-            <h3>PLease enter something...</h3>
-            <div id="container"></div>
-            <div class="input-group">
-                <span class="input-group-addon"></span>
-                <input type="text" class="form-control" placeholder="white something..." id="message" />
+        <div class="panel panel-default">
+            <div class="panel panel-heading">Websocket connection...</div>
+            <div class="panel panel-body">
+                <h3>PLease enter something...</h3>
+                <div id="container"></div>
+                <div class="input-group">
+                    <span class="input-group-addon"></span>
+                    <input
+                        type="text"
+                        class="form-control"
+                        placeholder="write something..."
+                        id="message"
+                    />
                 </div>
+            </div>
+        </div>
 
-                </div>
-                </div>
+        <script>
+            (function () {
+                var url =
+                    "wss://demo.piesocket.com/v3/channel_1?api_key=oCdCMcMPQpbvNjUIzqtvF1d2X2okWpDQj4AwARJuAgtjhzKxVEjQU6IdCjwm&notify_self";
+                var mySocket = new WebSocket(url);
+                var container = document.getElementById("container");
 
- <script>
-     (function(){
-         var url='wss://demo.piesocket.com/v3/channel_1?api_key=oCdCMcMPQpbvNjUIzqtvF1d2X2okWpDQj4AwARJuAgtjhzKxVEjQU6IdCjwm&notify_self';
-         var mySocket=new WebSocket(url);
-         var container=document.getElementById('container');
+                var key = (document.onkeypress = function (event) {
+                    event = event || window.event;
 
-         var key=document.onkeypress=function(event){
-             event=event || window.event;
+                    if (event.which == 13) {
+                        var message = document.getElementById("message");
+                        container.innerHTML +=
+                            '<div class="server-message"><span class="label label-success">Me</span>' +
+                            message.value +
+                            "</span></div>";
+                        console.log("me: " + message.value);
+                        mySocket.send(message.value);
+                        message.value = "";
+                    }
 
-             if (event.which==13){
-                 var message=document.getElementById('message');
-                 container.innerHTML+='<div class="server-message"><span class="label label-success">Me</span>'+message.value+'</span></div>';
-                 console.log('me: '+ message.value);
-                 mySocket.send(message.value);
-                 message.value='';
-             }
-
-             return event.which;
-         };
-         mySocket.onopen=function(){
-             console.log('opened');
-             container.innerHTML+='<h2><span class="label label-default"> Connection established: '+ url+'</span></h2>';
-         };
-         mySocket.onmessage=function(e){
-             console.log('server: '+ e.data);
-             container.innerHTML+='<div class="server-message"><span class="label label-warning">Server</span>'+e.data+'</div>';
-         }
-         mySocket.onclose=function(){
-             console.log('closed...');
-             container.innerHTML+='<h2><span class="label label-default">Connection closed!</span></h2>';
-         }
-
-     }())
-
- </script>
-
-
-
-
-
-
-
-
-
-
-    
-</body>
+                    return event.which;
+                });
+                mySocket.onopen = function () {
+                    console.log("opened");
+                    container.innerHTML +=
+                        '<h2><span class="label label-default"> Connection established: ' +
+                        url +
+                        "</span></h2>";
+                };
+                mySocket.onmessage = function (e) {
+                    console.log("server: " + e.data);
+                    container.innerHTML +=
+                        '<div class="server-message"><span class="label label-warning">Server</span>' +
+                        e.data +
+                        "</div>";
+                };
+                mySocket.onclose = function () {
+                    console.log("closed...");
+                    container.innerHTML +=
+                        '<h2><span class="label label-default">Connection closed!</span></h2>';
+                };
+            })();
+        </script>
+    </body>
 </html>
